@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+    <title>Department</title>
+  </head>
+  <style>
+  a:link, a:visited {
+  color: blue;
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+}
+a:hover:not(.active) {
+  background-color: #555;
+  color: white;
+  }
+</style>
+  <body style="background: #616161;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #9bc5c3, #616161);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #9bc5c3, #616161); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+;">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">Dashboard</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="{{ url_for('index')}}">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('admin_logout') }}">Logout</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<aside id="slide-out" class="side-nav white fixed" style = "padding-top:70px;">
+                <div class="side-nav-wrapper">
+                    <ul class="sidebar-menu collapsible collapsible-accordion" data-collapsible="accordion" style = "list-style:none;" >
+                    <li class="no-padding"><a class="waves-effect waves-grey" style = "list-style:none;" href="/dash">Dashboard</a></li>
+                    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Department
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="/adddepartment">Add Department</a><br>
+          <a class="dropdown-item" href="/managedepartment">Manage Department</a>
+          <div class="dropdown-divider"></div>
+        </div>
+      </li>
+                    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Leave Type
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="/addleave">Add Leave Type</a><br>
+          <a class="dropdown-item" href="/manageleave">Manage Leave Type</a>
+          <div class="dropdown-divider"></div>
+        </div>
+      </li>
+
+                        <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Employee
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="/addemployee">Add Employee</a><br>
+          <a class="dropdown-item" href="/manageemployee">Manage Employee</a>
+          <div class="dropdown-divider"></div>
+        </div>
+      </li>
+
+
+   <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Leave Management
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="/allleaves">All Leaves</a><br>
+            <a class="dropdown-item" href="#">Pending Leaves</a><br>
+          <a class="dropdown-item" href="#">Approved Leaves</a><br>
+          <a class="dropdown-item" href="#">Not Approved Leaves</a>
+          <div class="dropdown-divider"></div>
+        </div>
+      </li>
+
+                        <li class="nav-item">
+        <a class="nav-link" href="/report">Report</a>
+      </li>
+
+                </ul>
+                </div>
+</aside>
+  <div class="content" align="center">
+   <div class="row no-m-t no-m-b">
+                        <div class="col s12 m12 l12">
+
+                                    <div class=" offset-md-1 col-8" style="margin-top:-300px;" >
+                                        <center><h1>All Departments</h1></center>
+   <table class="table table-bordered table-dark">
+    <tr>
+      <th>Sr no</th>
+        <th>Dept Name</th>
+        <th>Dept Short Name</th>
+        <th>Dept Code</th>
+        <th>Action</th>
+      </th>
+
+    </tr>
+       {% for row in dep %}
+                                       <tr>
+                                           <td>{{row['id']}}</td>
+                                    <td>{{row['Department']}}</td>
+                                    <td>{{ row['Department_shortname'] }}</td>
+                                    <td>{{ row['Department_code'] }}</td>
+                                           <td>
+                                           <a onclick="window.location.href='{{ url_for('dep_delete', rowData=row['id']) }}';" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit">Delete</a></td>
+                                       </tr>
+       {% endfor %}
+
+
+   </table>
+                                    </div>
+                        </div>
+   </div>
+  </div>
+
+
+
+
+     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+
+  </body>
+</html>
